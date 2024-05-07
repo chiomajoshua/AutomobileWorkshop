@@ -1,6 +1,6 @@
 ﻿namespace BuildingBlocks.Domain.Enumerators;
 
-public enum ProductionStatus
+public enum TaskStatus
 {
     Pending = 1,
     InProgress,
