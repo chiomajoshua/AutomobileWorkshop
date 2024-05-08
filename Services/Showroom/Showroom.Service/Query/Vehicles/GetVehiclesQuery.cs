@@ -5,4 +5,4 @@ using ShowroomService.Data.Models.Requests.Vehicles;
 
 namespace ShowroomService.Core.Query.Vehicles;
 
-public record GetVehiclesQuery(PaginationModel PaginationModel, GetVehicleFilter GetInventoryFilter) : IRequest<AmwResponse>;
+public record GetVehiclesQuery(PaginationModel PaginationModel, GetVehicleFilter GetVehicleFilter) : IRequest<AmwResponse>;
