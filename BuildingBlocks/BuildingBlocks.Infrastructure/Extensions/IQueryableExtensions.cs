@@ -91,6 +91,7 @@ public static class IQueryableExtensions
         //  return modified query
         return query;
     }
+
     /// <summary>
     /// apply includes list to source query
     /// </summary>
@@ -101,5 +102,16 @@ public static class IQueryableExtensions
         return query.Include(c => c.Orders);
     }
 
-   
+    /// <summary>
+    /// apply includes list to source query
+    /// </summary>
+    /// <param name="query">source query being modified</param>
+    /// <returns>modified query</returns>
+    public static IQueryable<Vehicle> ExtendVehicleIncludes(this IQueryable<Vehicle> query)
+    {
+        return query.Include(c => c.VehicleComponents)
+                    .ThenInclude(c => c.Component);
+    }
+
+
 }

@@ -18,11 +18,13 @@ public class AutomobileDbContext : DbContext
     public DbSet<ProductionQueue> ProductionQueue {  get; set; }
     public DbSet<AssemblyQueue> AssemblyQueue { get; set; }
     public DbSet<Events> Events { get; set; }
+    public DbSet<VehicleComponent> VehicleComponents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
+            entity.ToTable("Customer", "wms");
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Customer");
             entity.Property(p => p.FirstName).HasColumnType("nvarchar(50)").HasComment("Customer's First Name");
             entity.Property(p => p.LastName).HasColumnType("nvarchar(50)").HasComment("Customer's Last Name");
@@ -47,7 +49,11 @@ public class AutomobileDbContext : DbContext
             entity.HasMany(d => d.OrderItems)
                   .WithOne(p => p.Order)
                   .HasForeignKey(d => d.OrderId);
-        });
+
+            entity.HasOne(o => o.Vehicle)
+            .WithMany(v => v.Orders)
+            .HasForeignKey(o => o.VehicleId);
+        });            
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
@@ -63,6 +69,7 @@ public class AutomobileDbContext : DbContext
 
         modelBuilder.Entity<Component>(entity =>
         {
+            entity.ToTable("Components", "Inventory");
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Component");
             entity.Property(p => p.ComponentType).HasComment("Type of component (Engine, Chassis, Option pack)");
             entity.Property(p => p.QuantityAvailable).HasComment("Number of available units of the component");
@@ -77,9 +84,30 @@ public class AutomobileDbContext : DbContext
 
         modelBuilder.Entity<Vehicle>(entity =>
         {
+            entity.ToTable("Vehicles", "Inventory");
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Vehicle");
             entity.Property(p => p.Model).HasComment("Model of the vehicle");
             entity.Property(p => p.QuantityAvailable).HasComment("Number of available units of the vehicle");
+            entity.Property(p => p.Price).HasComment("Price of the vehicle");
+            entity.Property(p => p.Manufacturer).HasComment("Manufacturer of the vehicle");
+            entity.Property(p => p.Year).HasComment("Year the vehicle was produced");
+            entity.Property(p => p.VehicleType).HasComment("Type of vehicle (Sedan, SUV, Truck)");
+            entity.HasMany(d => d.Orders)
+                  .WithOne(p => p.Vehicle)
+                  .HasForeignKey(d => d.VehicleId);          
+        });
+
+        modelBuilder.Entity<VehicleComponent>(entity =>
+        {
+            entity.ToTable("VehicleComponent", "Inventory");
+            entity.HasKey(vc => new { vc.VehicleId, vc.ComponentId });
+           entity.HasOne(vc => vc.Vehicle)
+            .WithMany(v => v.VehicleComponents)
+            .HasForeignKey(vc => vc.VehicleId);
+
+            entity.HasOne(vc => vc.Component)
+            .WithMany(c => c.VehicleComponents)
+            .HasForeignKey(vc => vc.ComponentId);
         });
 
         modelBuilder.Entity<ProductionQueue>(entity =>

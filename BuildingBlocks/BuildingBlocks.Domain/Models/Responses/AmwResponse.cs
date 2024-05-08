@@ -21,4 +21,18 @@ public class AmwResponse
             ResponseCode = ApiStatusConstants.OK
         };
     }
+
+    public static AmwResponse ExistsResponse<T>(T? data)
+    {
+        bool isSuccess = data is not null;
+        int statusCode = isSuccess ? ApiStatusConstants.OK : ApiStatusConstants.NotFound;
+
+        return new AmwResponse
+        {
+            Status = isSuccess,
+            ResponseCode = statusCode,
+            ResponseMessage = isSuccess ? "Record(s) Found" : "No record(s) found",
+            ResponseData = data,
+        };
+    }
 }

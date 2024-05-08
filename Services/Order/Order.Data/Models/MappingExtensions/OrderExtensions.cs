@@ -1,8 +1,8 @@
 ﻿using BuildingBlocks.Domain.Entities;
 using BuildingBlocks.Domain.Enumerators;
-using Showroom.Data.Models.Requests;
+using OrderService.Data.Models.Requests;
 
-namespace Showroom.Data.Models.MappingExtensions;
+namespace OrderService.Data.Models.MappingExtensions;
 
 public static class OrderExtensions
 {

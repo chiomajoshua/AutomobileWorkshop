@@ -8,4 +8,4 @@ public class AssemblyQueue : TrackedEntity
     public Enumerators.TaskStatus AssemblyStatus { get; set; }
     public DateTimeOffset AssemblyDate { get; set; }
     public virtual Component Component { get; set; } = null!;
-}
+}                     
