@@ -6,7 +6,7 @@ using ShowroomService.Core.Query.Components;
 using ShowroomService.Data.Models.Requests.Components;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Showroom.Api.Controllers;
+namespace ShowroomService.Api.Controllers;
 
 /// <summary>
 /// Component Controller

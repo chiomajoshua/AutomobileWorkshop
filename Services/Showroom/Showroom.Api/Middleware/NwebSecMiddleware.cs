@@ -1,4 +1,4 @@
-﻿namespace Showroom.Api.Middleware;
+﻿namespace ShowroomService.Api.Middleware;
 
 /// <summary>
 /// 

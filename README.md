@@ -99,6 +99,8 @@ Automobile Workshop Microservice Backend
 
 ## TODO
 1. Expand The Vehicle Entity to include other entities like Company, Model, etc
+2. Implement Unit Of Work to improve efficiency and handle failures
+3. There are other scenarios when ordering a vehicle, eg. order more than one vehicle. This scenario has not been taking care of.
 
 ## License
 

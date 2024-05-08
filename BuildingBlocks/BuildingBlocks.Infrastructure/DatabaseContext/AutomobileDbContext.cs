@@ -58,8 +58,7 @@ public class AutomobileDbContext : DbContext
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Order Item");
-            entity.Property(p => p.OrderId).HasComment("The Identifier for the Order");            
-            entity.Property(p => p.Quantity).HasComment("Quantity of the component included in the order");
+            entity.Property(p => p.OrderId).HasComment("The Identifier for the Order");
             entity.Property(p => p.PricePerUnit).HasComment("Price of the component at the time of order placement");
             entity.Property(p => p.ComponentId).HasComment("The Identifier of the component included in the order");
             entity.HasOne(d => d.Order)

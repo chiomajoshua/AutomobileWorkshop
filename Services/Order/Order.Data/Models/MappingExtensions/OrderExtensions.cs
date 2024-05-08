@@ -8,8 +8,10 @@ public static class OrderExtensions
 {
     public static Order ToCreateOrder(this CreateOrderRequest orderRequest, Guid customerId)
     => new()
-    {
+    {    
+         Id = Guid.NewGuid(),
+         VehicleId = orderRequest.VehicleId,
          CustomerId = customerId,
-         OrderStatus = OrderStatus.Placed
+         OrderStatus = OrderStatus.Processing
     };
 }

@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Showroom", "Showroom", "{8F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowroomService.Core", "Services\Showroom\Showroom.Service\ShowroomService.Core.csproj", "{7ED1322B-660C-4F66-8BB4-0511CB8D2BAC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Showroom.Api", "Services\Showroom\Showroom.Api\Showroom.Api.csproj", "{7BC60ECD-DF78-4754-8B61-A1D63CDC7479}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowroomService.Api", "Services\Showroom\Showroom.Api\ShowroomService.Api.csproj", "{7BC60ECD-DF78-4754-8B61-A1D63CDC7479}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CD009728-0017-48D6-9E45-F200FE8B9C72}"
 EndProject

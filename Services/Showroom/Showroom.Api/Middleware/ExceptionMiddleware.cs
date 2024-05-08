@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Serilog;
 using System.Net;
 
-namespace Showroom.Api.Middleware;
+namespace ShowroomService.Api.Middleware;
 
 /// <summary>
 /// 

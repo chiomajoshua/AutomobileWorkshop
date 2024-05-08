@@ -8,7 +8,7 @@ public static class VehicleExtensions
     public static List<VehicleResponse> VehicleResponseList(this IEnumerable<Vehicle> vehicles)
     {
         List<VehicleResponse> result = null;
-        if (vehicles?.Count() is null)
+        if (vehicles?.Count() < 1)
             return result;
 
         result?.AddRange(vehicles.Select(vehicleResponse => new VehicleResponse()

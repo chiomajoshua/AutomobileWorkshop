@@ -8,7 +8,7 @@ public static class ComponentExtensions
     public static List<ComponentResponse> ComponentResponseList(this IEnumerable<Component> components)
     {
         List<ComponentResponse> result = null;
-        if (components?.Count() is null)
+        if (components?.Count() < 1)
             return result;
 
         result?.AddRange(components.Select(componentResponse => new ComponentResponse()

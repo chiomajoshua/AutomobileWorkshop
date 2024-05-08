@@ -6,7 +6,7 @@ using ShowroomService.Core.Query.Vehicles;
 using ShowroomService.Data.Models.Requests.Vehicles;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Showroom.Api.Controllers;
+namespace ShowroomService.Api.Controllers;
 
 /// <summary>
 /// Vehicle Controller

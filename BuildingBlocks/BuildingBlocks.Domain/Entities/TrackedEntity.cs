@@ -5,5 +5,5 @@ namespace BuildingBlocks.Domain.Entities;
 public abstract class TrackedEntity
 {
     [Key]
-    public Guid Id { get; set; }    
+    public Guid Id { get; set; } = Guid.NewGuid();    
 }

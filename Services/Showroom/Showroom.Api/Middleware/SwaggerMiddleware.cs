@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
-namespace Showroom.Api.Middleware;
+namespace ShowroomService.Api.Middleware;
 
 /// <summary>
 /// 
@@ -21,20 +21,20 @@ public static class SwaggerMiddleware
         {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Loan Credit Factory API",
+                Title = "Automobile Workshop Inventory Service",
                 Version = "1.0",
-                Description = "Loan Credit Product Factory",
+                Description = "Inventory",
                 Contact = new OpenApiContact
                 {
                     Name = "Application Support",
-                    Email = "info@bazaratech.com"
+                    Email = "engineering@boxcommerce.com"
                 },
                 Extensions = new Dictionary<string, IOpenApiExtension>
             {
                 {"x-logo", new OpenApiObject
                     {
                         {"url", new OpenApiString("#")},
-                        { "altText", new OpenApiString("Bazara Logo")}
+                        { "altText", new OpenApiString("Box Commerce Logo")}
                     }
                 }
             }

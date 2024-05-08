@@ -1,47 +1,47 @@
 ﻿using BuildingBlocks.Domain.Entities;
 using BuildingBlocks.Domain.Models.Responses;
-using BuildingBlocks.Infrastructure.RepositoryManager.EfCore.Services;
+using BuildingBlocks.Infrastructure.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using OrderService.Core.Services.OrderItems.Contracts;
+using OrderService.Core.Services.Orders.Contracts;
+using OrderService.Core.Services.Vehicles.Contracts;
+using OrderService.Data.Models.MappingExtensions;
 using OrderService.Service.Command;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace OrderService.Service.Handler;
 
 public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, AmwResponse>
 {
-    private readonly IRepositoryService<Order> _orderRepository;
-    private readonly IRepositoryService<Vehicle> _vehicleRepository;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IOrderService _orderService;
+    private readonly IOrderItemService _orderItemService;
+    private readonly IVehicleService _vehicleService;
     //private readonly IEventBus _eventBus;
 
-    public CreateOrderHandler(IRepositoryService<Order> orderRepository)//IEventBus eventBus
+    public CreateOrderHandler(IVehicleService vehicleService, IOrderService orderService, IOrderItemService orderItemService)//IEventBus eventBus
     {
-        _orderRepository = orderRepository;
-        //_eventBus = eventBus;
+        _vehicleService = vehicleService;
+        _orderService = orderService;
+        _orderItemService = orderItemService;
     }
 
     public async Task<AmwResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+        var orderRequest = request.CreateOrderRequest;
+        HttpContext context = HttpContextHelper.Current;
+        var customerId = Guid.Parse(context.User?.Claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sid).Value);
 
-        //var orderRequest = request.CreateOrderRequest;
+        var vehicle = await _vehicleService.GetVehicleByIdAsync(orderRequest.VehicleId);
+        if (vehicle is null)
+            return AmwResponse.ExistsResponse((Vehicle)null);
 
-        // var vehicle = await _vehicleRepository.GetByIdAsync(orderRequest.VehicleId);
-
-        //vehicle is available or not
-        //if(vehicle.QuantityAvailable > 1)
-        //{
-           //Place the order
-        //}
-        //var order = new Order(request.CustomerId, request.VehicleId, request.ComponentIds);
-        //await _orderRepository.AddAsync(order);
-
-        //var orderDto = new OrderDto
-        //{
-        //    Id = order.Id,
-        //    CustomerId = order.CustomerId,
-        //    VehicleId = order.VehicleId,
-        //    ComponentIds = order.ComponentIds
-        //};
+        var order = await _orderService.CreateOrder(orderRequest.ToCreateOrder(customerId));
+        if (order is null)
+            return AmwResponse.SuccessResponse(order);
+        else            
+            await _orderItemService.CreateOrderItem(orderRequest.OrderItems.OrderItemDb(order.Id));
+     
 
         //await _eventBus.PublishAsync(new OrderPlacedEvent(order.Id, order.CustomerId, order.VehicleId, order.ComponentIds));
 
