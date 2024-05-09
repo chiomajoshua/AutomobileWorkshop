@@ -24,4 +24,11 @@ public class AssemblyService : IAssemblyService
 
     public async Task<AssemblyQueue> GetQueueTaskByOrderId(Guid orderId)
     => await _assembly.GetSingleAsync(filter: x => x.OrderId == orderId);
+
+    public async Task<bool> UpdateAssemblyQueue(AssemblyQueue assemblyQueue)
+    {
+        if (assemblyQueue is null)
+            throw new ArgumentNullException(nameof(assemblyQueue));
+        return await _assembly.UpdateAsync(assemblyQueue);
+    }
 }

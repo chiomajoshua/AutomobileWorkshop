@@ -9,5 +9,4 @@ public class Component : TrackedEntity
     public int QuantityAvailable { get; set; }
     public decimal Price { get; set; }
     public DateTimeOffset LastModifiedDate { get; set; } = DateTimeOffset.Now;
-    public virtual ICollection<VehicleComponent> VehicleComponents { get; set; } = new List<VehicleComponent>();
 }

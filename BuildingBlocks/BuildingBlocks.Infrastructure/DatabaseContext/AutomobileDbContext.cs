@@ -17,7 +17,6 @@ public class AutomobileDbContext : DbContext
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<ProductionQueue> ProductionQueue {  get; set; }
     public DbSet<AssemblyQueue> AssemblyQueue { get; set; }
-    public DbSet<VehicleComponent> VehicleComponents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,20 +76,7 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.Price).HasComment("Price of the vehicle");
             entity.Property(p => p.Manufacturer).HasComment("Manufacturer of the vehicle");
             entity.Property(p => p.Year).HasComment("Year the vehicle was produced");
-        });
-
-        modelBuilder.Entity<VehicleComponent>(entity =>
-        {
-            entity.ToTable("VehicleComponent", "Inventory");
-            entity.HasKey(vc => new { vc.VehicleId, vc.ComponentId });
-           entity.HasOne(vc => vc.Vehicle)
-            .WithMany(v => v.VehicleComponents)
-            .HasForeignKey(vc => vc.VehicleId);
-
-            entity.HasOne(vc => vc.Component)
-            .WithMany(c => c.VehicleComponents)
-            .HasForeignKey(vc => vc.ComponentId);
-        });
+        });                                            
 
         modelBuilder.Entity<ProductionQueue>(entity =>
         {

@@ -5,5 +5,6 @@ public class OrderItem : TrackedEntity
     public Guid OrderId { get; set; }
     public Guid ComponentId { get; set; }
     public decimal PricePerUnit {  get; set; }
+    public int Quantity { get; set; }
     public virtual Order Order { get; set; } = null!;
 }

@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Domain.Entities;
+using BuildingBlocks.Domain.Enumerators;
 using BuildingBlocks.Infrastructure.InternetClient.Contracts;
 using BuildingBlocks.Infrastructure.RabbitMq.Contracts;
 using MediatR;
@@ -19,26 +20,28 @@ public class ProcessOrderHandler : IRequestHandler<ProcessOrderCommand, bool>
 
     public async Task<bool> Handle(ProcessOrderCommand request, CancellationToken cancellationToken)
     {
-        var orderRequest = request.OrderRequest;
-        
+        var orderRequest = request.OrderRequest;        
         var baseUrl = Environment.GetEnvironmentVariable("OrderServiceBaseUrl", EnvironmentVariableTarget.Process);
-        var getOrderUrl = Environment.GetEnvironmentVariable("OrderServiceGetOrderById", EnvironmentVariableTarget.Process).Replace("{orderId}", orderRequest.OrderId.ToString());
+        var getOrderUrl = Environment.GetEnvironmentVariable("GetOrderById", EnvironmentVariableTarget.Process).Replace("{orderId}", orderRequest.OrderId.ToString());
         var url = $"{baseUrl}{getOrderUrl}";
         var response = await _httpClientService.MakeHttpCall(HttpMethod.Get, url);
         if (response.IsSuccessStatusCode)
         {
             var order = JsonConvert.DeserializeObject<Order>(await response.Content.ReadAsStringAsync());
-            var vehicle = await GetVehicleById(order.VehicleId);
-            if (vehicle is null)
+            if (order.OrderStatus != OrderStatus.Completed || order.OrderStatus != OrderStatus.Cancelled)
             {
-                _rabbitMqProducer.PublishMessage(new { OrderId = order.Id }, "assemble.order");
-                return true;
+                var vehicle = await GetVehicleById(order.VehicleId);
+                if (vehicle is null || vehicle?.QuantityAvailable < 1)
+                {
+                    _rabbitMqProducer.PublishMessage(new { OrderId = order.Id }, "assemble.order");
+                    return true;
+                }
             }
             _rabbitMqProducer.PublishMessage(new { OrderId = order.Id }, "order.ready");
             return true;
         }
         _rabbitMqProducer.PublishMessage(new { Message = $"Order with Id, {orderRequest.OrderId}, not found" }, "order.notfound");
-        return false;
+        return true;
     }
 
     private async Task<Vehicle> GetVehicleById(Guid vehicleId)
