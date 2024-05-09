@@ -1,7 +1,8 @@
-﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+﻿using BuildingBlocks.Domain.Models.Requests;
+using MediatR;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using ProductionService.Core.Command;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -39,8 +40,8 @@ public class ProduceComponentHostedService : BackgroundService
         consumer.Received += async (model, ea) =>
         {
            byte[] body = ea.Body.ToArray();
-           var message = JsonConvert.DeserializeObject<object>(Encoding.UTF8.GetString(body));
-           await _mediator.Send(message);
+           var message = JsonConvert.DeserializeObject<OrderRequest>(Encoding.UTF8.GetString(body));
+           await _mediator.Send(new BuildComponentCommand(message));
         };
         channel.BasicConsume(queue: queueName,
                              autoAck: true,

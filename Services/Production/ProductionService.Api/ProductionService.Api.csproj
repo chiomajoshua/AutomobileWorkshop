@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,12 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>c044ef09-def1-4521-bb62-b6ce1f653822</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+	  <PackageReference Include="Serilog" Version="3.1.1" />
+	  <PackageReference Include="FluentValidation" Version="11.9.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+	  <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+	  <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

@@ -15,7 +15,7 @@ public class ProcessOrderHostedService : BackgroundService
     private readonly string _connectionString;
     private readonly string _exchange;
     private readonly IMediator _mediator;
-    public ProcessOrderHostedService(IMediator mediator, IConfiguration configuration)
+    public ProcessOrderHostedService(IMediator mediator)
     {
         _mediator = mediator;
         _connectionString = Environment.GetEnvironmentVariable("RabbitMqConnectionString", EnvironmentVariableTarget.Process);

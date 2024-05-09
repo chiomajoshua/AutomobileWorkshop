@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 namespace BuildingBlocks.Infrastructure.Middleware;
 
@@ -38,10 +37,7 @@ public static class SwaggerMiddleware
             }
             });
             c.CustomSchemaIds(x => x.FullName);
-            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            c.IncludeXmlComments(xmlPath);
+            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());           
             c.EnableAnnotations();
         });
         return services;

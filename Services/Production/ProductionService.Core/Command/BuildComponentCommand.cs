@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using BuildingBlocks.Domain.Models.Requests;
+using MediatR;
 
 namespace ProductionService.Core.Command;
 
-public record BuildComponentCommand(object BuildComponentRequest) : IRequest<bool>;
+public record BuildComponentCommand(OrderRequest OrderRequest) : IRequest<bool>;

@@ -4,18 +4,25 @@ using ProductionService.Core.Services.Contracts;
 
 namespace ProductionService.Core.Services.Implementation;
 
-public class ProductionService : IProductionService
+public class ProductionServices : IProductionService
 {
-    private readonly IRepositoryService<Component> _component;
-    public ProductionService(IRepositoryService<Component> component)
+    private readonly IRepositoryService<ProductionQueue> _production;
+    public ProductionServices(IRepositoryService<ProductionQueue> production)
     {
-        _component = component;
+        _production = production;
     }
 
-    public async Task<bool> UpdateComponent(Component component)
+    public async Task<ProductionQueue> CreateProductionTask(ProductionQueue productionQueue)
     {
-        if (component is null)
-            throw new ArgumentNullException(nameof(component));
-        return await _component.UpdateAsync(component);
+        if (productionQueue is null)
+            throw new ArgumentNullException(nameof(productionQueue));
+        return await _production.InsertAsync(productionQueue);
+    }
+
+    public async Task<bool> UpdateProductionQueue(ProductionQueue productionQueue)
+    {
+        if (productionQueue is null)
+            throw new ArgumentNullException(nameof(productionQueue));
+        return await _production.UpdateAsync(productionQueue);
     }
 }

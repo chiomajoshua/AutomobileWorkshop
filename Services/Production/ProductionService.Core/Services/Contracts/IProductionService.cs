@@ -4,5 +4,6 @@ namespace ProductionService.Core.Services.Contracts;
 
 public interface IProductionService
 {
-    Task<bool> UpdateComponent(Component component);
+    Task<ProductionQueue> CreateProductionTask(ProductionQueue productionQueue);
+    Task<bool> UpdateProductionQueue(ProductionQueue productionQueue);
 }
