@@ -14,7 +14,7 @@ public static class IQueryableExtensions
     /// <param name="query">source query being modified</param>
     /// <param name="filter">where clause details</param>
     /// <returns>modified query</returns>
-    public static IQueryable<T> ExtendWhere<T>(this IQueryable<T> query, Expression<Func<T, bool>>? filter)
+    public static IQueryable<T> ExtendWhere<T>(this IQueryable<T> query, Expression<Func<T, bool>> filter)
         => filter == null ? query : query.Where(filter);
     /// <summary>
     /// apply incldues list to source query
@@ -23,7 +23,7 @@ public static class IQueryableExtensions
     /// <param name="query">source query being modified</param>
     /// <param name="includeFunc">query modifier function</param>
     /// <returns>modified query</returns>
-    public static IQueryable<T> ExtendIncludes<T>(this IQueryable<T> query, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
+    public static IQueryable<T> ExtendIncludes<T>(this IQueryable<T> query, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         => includeFunc == null ? query : includeFunc(query);
     /// <summary>
     /// apply pagination model, if specified
@@ -32,7 +32,7 @@ public static class IQueryableExtensions
     /// <param name="query">source query being modified</param>
     /// <param name="model">pagination details</param>
     /// <returns>modified query</returns>
-    public static IQueryable<T> ExtendPagination<T>(this IQueryable<T> query, PaginationModel? model)
+    public static IQueryable<T> ExtendPagination<T>(this IQueryable<T> query, PaginationModel model)
         => model == null ? query : query.Skip((model.Page - 1) * model.Page).Take(model.PageSize);
     /// <summary>
     /// apply order by clause asc|desc
@@ -42,7 +42,7 @@ public static class IQueryableExtensions
     /// <param name="orderByExpression">order by statement</param>
     /// <param name="ascending">order by direction</param>
     /// <returns>modified query</returns>
-    public static IQueryable<T> ExtendOrderBy<T>(this IQueryable<T> query, Expression<Func<T, object>>? orderBy, bool ascending = true)
+    public static IQueryable<T> ExtendOrderBy<T>(this IQueryable<T> query, Expression<Func<T, object>> orderBy, bool ascending = true)
     {
         if (ascending)
             return orderBy == null ? query : (query.OrderBy(orderBy));          
@@ -100,17 +100,6 @@ public static class IQueryableExtensions
     public static IQueryable<Customer> ExtendCompanyIncludes(this IQueryable<Customer> query)
     {
         return query.Include(c => c.Orders);
-    }
-
-    /// <summary>
-    /// apply includes list to source query
-    /// </summary>
-    /// <param name="query">source query being modified</param>
-    /// <returns>modified query</returns>
-    public static IQueryable<Vehicle> ExtendVehicleIncludes(this IQueryable<Vehicle> query)
-    {
-        return query.Include(c => c.VehicleComponents)
-                    .ThenInclude(c => c.Component);
     }
 
     /// <summary>

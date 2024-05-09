@@ -18,8 +18,8 @@ public class ProcessOrderHostedService : BackgroundService
     public ProcessOrderHostedService(IMediator mediator, IConfiguration configuration)
     {
         _mediator = mediator;
-        _connectionString = configuration.GetValue<string>("RabbitMq:ConnectionString");
-        _exchange = configuration.GetValue<string>("RabbitMq:Exchange");
+        _connectionString = Environment.GetEnvironmentVariable("RabbitMqConnectionString", EnvironmentVariableTarget.Process);
+        _exchange = Environment.GetEnvironmentVariable("RabbitMqExchangeName", EnvironmentVariableTarget.Process);
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)

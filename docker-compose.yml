@@ -1,9 +1,6 @@
 version: '3.4'
 
 services: 
-  portainer:
-    image: portainer/portainer-ce
-
   showroom.api:
     image: ${DOCKER_REGISTRY-}showroomapi
     build:

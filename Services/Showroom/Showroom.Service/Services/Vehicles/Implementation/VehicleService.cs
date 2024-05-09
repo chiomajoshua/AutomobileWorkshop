@@ -20,11 +20,11 @@ public class VehicleService : IVehicleService
     public async Task<PageData<Vehicle>> GetVehiclesAsync(PaginationModel paginationModel, GetVehicleFilter getVehicleFilter)
     {
         Expression<Func<Vehicle, bool>> query_filter = BuildFilterParams(getVehicleFilter);
-        return await _vehicle.GetPagedAsync(paginationModel, query_filter, query => query.ExtendVehicleIncludes());
+        return await _vehicle.GetPagedAsync(paginationModel, query_filter);
     }
 
     public async Task<Vehicle> GetVehicleByIdAsync(Guid vehicleId)
-        => await _vehicle.GetSingleAsync(filter: x => x.Id == vehicleId, includeFunc: query => query.ExtendVehicleIncludes());
+        => await _vehicle.GetSingleAsync(filter: x => x.Id == vehicleId);
 
     private static Expression<Func<Vehicle, bool>> BuildFilterParams(GetVehicleFilter getVehicleFilter)
     {
