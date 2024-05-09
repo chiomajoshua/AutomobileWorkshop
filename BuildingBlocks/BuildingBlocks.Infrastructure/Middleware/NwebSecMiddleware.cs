@@ -1,4 +1,7 @@
-﻿namespace ShowroomService.Api.Middleware;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace BuildingBlocks.Infrastructure.Middleware;
 
 /// <summary>
 /// 

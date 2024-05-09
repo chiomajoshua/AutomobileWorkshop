@@ -17,8 +17,8 @@ public static class VehicleExtensions
             Manufacturer = vehicleResponse.Manufacturer,
             Model = vehicleResponse.Model,
             Year = vehicleResponse.Year,
-            VehicleType = vehicleResponse.VehicleType,
             QuantityAvailable = vehicleResponse.QuantityAvailable,
+            InventoryId = vehicleResponse.InventoryId,
             Price = vehicleResponse.Price,
             Components = vehicleResponse.VehicleComponents.Where(vc => vc.VehicleId == vehicleResponse.Id).Select(x => x.Component).ComponentResponseList()
         }));
@@ -36,8 +36,8 @@ public static class VehicleExtensions
             Manufacturer = vehicle.Manufacturer,
             Model = vehicle.Model,
             Year = vehicle.Year,
-            VehicleType = vehicle.VehicleType,
             QuantityAvailable = vehicle.QuantityAvailable,
+            InventoryId = vehicle.InventoryId,
             Price = vehicle.Price,
             Components = vehicle.VehicleComponents.Where(vc => vc.VehicleId == vehicle.Id).Select(x => x.Component).ComponentResponseList()
         };

@@ -113,5 +113,15 @@ public static class IQueryableExtensions
                     .ThenInclude(c => c.Component);
     }
 
+    /// <summary>
+    /// apply includes list to source query
+    /// </summary>
+    /// <param name="query">source query being modified</param>
+    /// <returns>modified query</returns>
+    public static IQueryable<Order> ExtendOrderIncludes(this IQueryable<Order> query)
+    {
+        return query.Include(c => c.OrderItems);
+    }
+
 
 }

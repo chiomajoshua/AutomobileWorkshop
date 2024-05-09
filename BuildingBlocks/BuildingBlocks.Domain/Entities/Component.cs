@@ -10,6 +10,4 @@ public class Component : TrackedEntity
     public decimal Price { get; set; }
     public DateTimeOffset LastModifiedDate { get; set; } = DateTimeOffset.Now;
     public virtual ICollection<VehicleComponent> VehicleComponents { get; set; } = new List<VehicleComponent>();
-    public virtual ICollection<ProductionQueue> ProductionQueues { get; set; } = new List<ProductionQueue>();
-    public virtual ICollection<AssemblyQueue> AssemblyQueues { get; set; } = new List<AssemblyQueue>();
 }

@@ -2,6 +2,6 @@
 using MediatR;
 using OrderService.Data.Models.Requests;
 
-namespace OrderService.Service.Command;
+namespace OrderService.Core.Command;
 
 public record CreateOrderCommand(CreateOrderRequest CreateOrderRequest) : IRequest<AmwResponse>;

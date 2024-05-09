@@ -32,10 +32,6 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.Address).HasMaxLength(int.MaxValue).HasComment("The Customer's Address");
             entity.Property(p => p.CreatedDate).HasComment("The Date the Customer was Created");
             entity.Property(p => p.LastModifiedDate).HasComment("The Date the Customer was Last Modified");
-            entity.HasMany(d => d.Orders)
-                  .WithOne(p => p.Customer)
-                  .HasForeignKey(d => d.CustomerId)
-                  .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -43,16 +39,14 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Order");
             entity.Property(p => p.CustomerId).HasComment("The Identifier for the Customer");
             entity.Property(p => p.OrderStatus).HasComment("Current status of the order(Placed, Processing, Completed, Cancelled)");
+            entity.Property(p => p.VehicleId).HasComment("The Identifier of the vehicle ordered");
             entity.Property(p => p.OrderDate).HasComment("The Date the Order was Placed");
             entity.Property(p => p.LastModifiedDate).HasComment("The Date the Order was Last Modified");
             entity.Property(p => p.TotalPrice).HasComment("TotalPrice on all items for this order");
+            entity.Property(p => p.Quantity).HasComment("TotalPrice on all items for this order");
             entity.HasMany(d => d.OrderItems)
                   .WithOne(p => p.Order)
                   .HasForeignKey(d => d.OrderId);
-
-            entity.HasOne(o => o.Vehicle)
-            .WithMany(v => v.Orders)
-            .HasForeignKey(o => o.VehicleId);
         });            
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -73,12 +67,6 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.ComponentType).HasComment("Type of component (Engine, Chassis, Option pack)");
             entity.Property(p => p.QuantityAvailable).HasComment("Number of available units of the component");
             entity.Property(p => p.LastModifiedDate).HasComment("The Last Date and Time the Component was Produced");
-            entity.HasMany(d => d.ProductionQueues)
-                  .WithOne(p => p.Component)
-                  .HasForeignKey(d => d.ComponentId);
-            entity.HasMany(d => d.AssemblyQueues)
-                  .WithOne(p => p.Component)
-                  .HasForeignKey(d => d.ComponentId);
         });
 
         modelBuilder.Entity<Vehicle>(entity =>
@@ -90,10 +78,6 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.Price).HasComment("Price of the vehicle");
             entity.Property(p => p.Manufacturer).HasComment("Manufacturer of the vehicle");
             entity.Property(p => p.Year).HasComment("Year the vehicle was produced");
-            entity.Property(p => p.VehicleType).HasComment("Type of vehicle (Sedan, SUV, Truck)");
-            entity.HasMany(d => d.Orders)
-                  .WithOne(p => p.Vehicle)
-                  .HasForeignKey(d => d.VehicleId);          
         });
 
         modelBuilder.Entity<VehicleComponent>(entity =>
@@ -109,6 +93,11 @@ public class AutomobileDbContext : DbContext
             .HasForeignKey(vc => vc.ComponentId);
         });
 
+        modelBuilder.Entity<Inventory>(entity =>
+        {
+            entity.ToTable("Inventory", "Inventory");
+        });
+
         modelBuilder.Entity<ProductionQueue>(entity =>
         {
             entity.Property(p => p.Id).HasComment("The Unique identifier for the Production task");
@@ -116,22 +105,13 @@ public class AutomobileDbContext : DbContext
             entity.Property(p => p.Quantity).HasComment("Number of units to be produced");
             entity.Property(p => p.ProductionStatus).HasComment("Status of the production task (Pending, InProgress, Completed");
             entity.Property(p => p.ProductionDate).HasComment("The Date and Time this Production Task was Initiated");
-            entity.HasOne(d => d.Component)
-                  .WithMany(p => p.ProductionQueues)
-                  .HasForeignKey(d => d.ComponentId);
         });
 
         modelBuilder.Entity<AssemblyQueue>(entity =>
         {
-            entity.Property(p => p.Id).HasComment("The Unique identifier for the Assembly task");
-            entity.Property(p => p.ComponentId).HasComment("The Identifier of the component to be Assembled");
-            entity.Property(p => p.Quantity).HasComment("Number of units to be Assembled");
+            entity.Property(p => p.Id).HasComment("The Unique identifier for the Assembly task");           
             entity.Property(p => p.AssemblyStatus).HasComment("Status of the assembly task (Pending, InProgress, Completed");
-            entity.Property(p => p.AssemblyDate).HasComment("The Date and Time this Assembly Task was Initiated");
-            entity.Property(p => p.OrderId).HasComment("The Identifier of the order being assembled");
-            entity.HasOne(d => d.Component)
-                  .WithMany(p => p.AssemblyQueues)
-                  .HasForeignKey(d => d.ComponentId);
+            entity.Property(p => p.AssemblyDate).HasComment("The Date and Time this Assembly Task was Initiated");           
         });
     }
 }

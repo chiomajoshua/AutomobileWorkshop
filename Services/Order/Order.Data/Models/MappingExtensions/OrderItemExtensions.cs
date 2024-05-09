@@ -14,7 +14,8 @@ public static class OrderItemExtensions
         result?.AddRange(orderItemRequests.Select(orderItem => new OrderItem()
         {
             ComponentId = orderItem.ComponentId,
-            OrderId = orderId
+            OrderId = orderId,
+            PricePerUnit = orderItem.PricePerUnit
         }));
         return result;
     }

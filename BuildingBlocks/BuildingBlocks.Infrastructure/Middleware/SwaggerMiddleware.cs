@@ -1,9 +1,11 @@
-﻿using Microsoft.OpenApi.Any;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
-namespace ShowroomService.Api.Middleware;
+namespace BuildingBlocks.Infrastructure.Middleware;
 
 /// <summary>
 /// 
@@ -15,20 +17,16 @@ public static class SwaggerMiddleware
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddSwaggerService(this IServiceCollection services)
+    public static IServiceCollection AddSwaggerService(this IServiceCollection services, string apiName, string apiVersion, string description, OpenApiContact contact)
     {
         _ = services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Automobile Workshop Inventory Service",
-                Version = "1.0",
-                Description = "Inventory",
-                Contact = new OpenApiContact
-                {
-                    Name = "Application Support",
-                    Email = "engineering@boxcommerce.com"
-                },
+                Title = apiName,
+                Version = apiVersion,
+                Description = description,
+                Contact = contact,
                 Extensions = new Dictionary<string, IOpenApiExtension>
             {
                 {"x-logo", new OpenApiObject
@@ -57,17 +55,7 @@ public static class SwaggerMiddleware
     public static IApplicationBuilder UseSwaggerService(this IApplicationBuilder app)
     {
         app.UseSwagger(c => c.SerializeAsV2 = true);
-        app.UseSwaggerUI(c =>
-        {
-            c.DefaultModelsExpandDepth(-1);
-            c.SwaggerEndpoint("../swagger/v1/swagger.json", "Automobile Workshop Inventory Service");
-        });
-
-        app.UseReDoc(options =>
-        {
-            options.DocumentTitle = "Automobile Workshop Inventory Service";
-            options.SpecUrl = "../swagger/v1/swagger.json";
-        });
+        app.UseSwaggerUI();
         return app;
     }
 }

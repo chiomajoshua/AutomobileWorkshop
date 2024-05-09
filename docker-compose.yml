@@ -1,12 +1,6 @@
 version: '3.4'
 
-services:
-  mssql_server:
-    image: mcr.microsoft.com/mssql/server
-
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-
+services: 
   portainer:
     image: portainer/portainer-ce
 
@@ -15,11 +9,3 @@ services:
     build:
       context: .
       dockerfile: Services/Showroom/Showroom.Api/Dockerfile
-
-networks:
-  rabbitmq_go_net:
-    driver: bridge
-
-volumes:
-  sqlserver_data:
-  data:

@@ -22,6 +22,16 @@ public class AmwResponse
         };
     }
 
+    public static AmwResponse CreatedResponse(object? data)
+    {
+        return new AmwResponse
+        {
+            Status = true,
+            ResponseData = data,
+            ResponseCode = ApiStatusConstants.Created
+        };
+    }
+
     public static AmwResponse ExistsResponse<T>(T? data)
     {
         bool isSuccess = data is not null;
@@ -33,6 +43,26 @@ public class AmwResponse
             ResponseCode = statusCode,
             ResponseMessage = isSuccess ? "Record(s) Found" : "No record(s) found",
             ResponseData = data,
+        };
+    }
+
+    public static AmwResponse BadRequestResponse(object data)
+    {
+        return new AmwResponse
+        {
+            Status = false,
+            ResponseData = data,
+            ResponseCode = ApiStatusConstants.BadRequest
+        };
+    }
+
+    public static AmwResponse ExceptionResponse(string? errorMessage = "")
+    {
+        return new AmwResponse
+        {
+            Status = false,
+            ResponseCode = ApiStatusConstants.InternalServerError,
+            ResponseMessage = errorMessage ?? ApiResponseMessages.DefaultMessages[ApiStatusConstants.InternalServerError]
         };
     }
 }

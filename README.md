@@ -101,6 +101,14 @@ Automobile Workshop Microservice Backend
 1. Expand The Vehicle Entity to include other entities like Company, Model, etc
 2. Implement Unit Of Work to improve efficiency and handle failures
 3. There are other scenarios when ordering a vehicle, eg. order more than one vehicle. This scenario has not been taking care of.
+4. When an order was persisted to the Database, we made an assumption that the order was successfully placed and afterwards published to the Warehouse Orders queue.
+
+## Assumptions
+1. When an order was persisted to the Database, we made an assumption that the order was successfully placed and afterwards published to the Warehouse Orders queue.
+2. We have made an Assumption that the component has been built and the component quantity has been updated on inventory records. 
+3. We are assuming that the topics are published and consumed using FIFO.
+1. We are assuming the order has a list of all the components(and the quantity) needed in building the vehicle
+
 
 ## License
 
