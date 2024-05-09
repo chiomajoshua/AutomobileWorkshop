@@ -1,24 +1,22 @@
 ﻿# Automobile Workshop Backend Documentation
 
 Welcome to the documentation for our Microservice Backend project! This guide provides a comprehensive overview of the project's structure, architecture, and key components. Whether you're a developer contributing or a team member seeking understanding, you're in the right place.
+Please note that this is a POC(not working as expected) but this I believe is an efficient way to solve the problem statement
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Project Structure](#project-structure)
 3. [Architecture Overview](#architecture-overview)
-4. [Shared Library - BuildingBlocks](#shared-library-buildingblocks)
-5. [Microservices](#microservices)
-    - [Retailer Microservice](#retailer-microservice)
-    - [Case Management Microservice](#case-management-microservice)
-6. [Database](#database)
-7. [Dockerization](#dockerization)
+4. [Database](#database)
+5. [Dockerization](#dockerization)
     - [Development Environment](#development-environment)
-8. [Unit Testing](#unit-testing)
-9. [Usage of Shared Components](#usage-of-shared-components)
-10. [Getting Started](#getting-started)
-11. [Contributing](#contributing)
-12. [License](#license)
+6. [Unit Testing](#unit-testing)
+7. [Getting Started](#getting-started)
+8. [Contributing](#contributing)
+9. [Todo](#TODO)
+10.[Assumptions](#Assumptions) 
+11.[License](#license)
 
 ## Introduction
 
@@ -91,6 +89,21 @@ Additional items that demonstrated
 - Error handling
 - Configuration
 
+## Database
+
+Both microservices share a common SQL Server database. 
+This centralizes data storage, facilitating data consistency and integrity.
+
+## Dockerization
+
+### Development Environment
+
+Use `docker-compose.yml` for development. Run `docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d` to start services.
+
+## Unit Testing
+
+Unit tests are crucial for maintaining code quality. 
+We're currently working on the unit tests for the project.
 
 ## Getting Started
 
@@ -112,12 +125,15 @@ Additional items that demonstrated
 2. Implement Unit Of Work to improve efficiency and handle failures
 3. There are other scenarios when ordering a vehicle, eg. order more than one vehicle. This scenario has not been taking care of.
 4. When an order was persisted to the Database, we made an assumption that the order was successfully placed and afterwards published to the Warehouse Orders queue.
+5. Write Unit Tests
 
 ## Assumptions
 1. When an order was persisted to the Database, we made an assumption that the order was successfully placed and afterwards published to the Warehouse Orders queue.
 2. We have made an Assumption that the component has been built and the component quantity has been updated on inventory records. 
 3. We are assuming that the topics are published and consumed using FIFO.
-1. We are assuming the order has a list of all the components(and the quantity) needed in building the vehicle
+4. We are assuming the order has a list of all the components(and the quantity) needed in building the vehicle.
+5. We are assuming RabbitMq, Seq, Portainer, and SQLServer have been setup.
+6. All configurations are expected from the Environment Variable
 
 
 ## License
