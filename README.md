@@ -15,8 +15,8 @@ Please note that this is a POC(not working as expected) but this I believe is an
 7. [Getting Started](#getting-started)
 8. [Contributing](#contributing)
 9. [Todo](#TODO)
-10.[Assumptions](#Assumptions) 
-11.[License](#license)
+10. [Assumptions](#Assumptions) 
+11. [License](#license)
 
 ## Introduction
 
