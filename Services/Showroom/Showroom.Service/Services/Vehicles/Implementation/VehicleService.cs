@@ -32,17 +32,6 @@ public class VehicleService : IVehicleService
         if (getVehicleFilter is null)
             return queryFilter;
 
-        if (getVehicleFilter.VehicleType?.Length > 0)
-        {
-            foreach (var item in getVehicleFilter.VehicleType)
-            {
-                if (queryFilter is null)
-                    queryFilter = e => e.VehicleType == item;
-                else
-                    queryFilter = queryFilter.Or(e => e.VehicleType == item);
-            }
-        }
-
         if (getVehicleFilter.ComponentType?.Length > 0)
         {
             foreach (var item in getVehicleFilter.ComponentType)

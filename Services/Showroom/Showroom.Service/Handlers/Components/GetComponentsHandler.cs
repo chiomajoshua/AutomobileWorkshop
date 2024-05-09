@@ -2,7 +2,6 @@
 using MediatR;
 using ShowroomService.Core.Query.Components;
 using ShowroomService.Core.Services.Components.Contracts;
-using ShowroomService.Data.Models.MappingExtensions;
 using ShowroomService.Data.Models.Responses.Components;
 
 namespace ShowroomService.Core.Handlers.Components;
@@ -20,7 +19,7 @@ public class GetComponentsHandler : IRequestHandler<GetComponentsQuery, AmwRespo
         var components = await _componentService.GetComponentsAsync(request.PaginationModel, request.GetComponentFilter);
         return AmwResponse.ExistsResponse(new ComponentListResponse
         {
-            Components = components.EntityData?.ComponentResponseList(),
+            Components = components.EntityData,
             CurrentPage = request.PaginationModel.Page,
             PageSize = request.PaginationModel.PageSize,
             TotalPages = (int)Math.Ceiling(components.TotalCount / (double)request.PaginationModel.PageSize)

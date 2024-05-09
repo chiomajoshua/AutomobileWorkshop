@@ -7,7 +7,5 @@ public class Vehicle : TrackedEntity
     public int Year { get; set; }   
     public int QuantityAvailable { get; set; }
     public decimal Price { get; set; }
-    public Guid InventoryId { get; set; }
-    public virtual Inventory Inventory { get; set; } = null!;
     public virtual ICollection<VehicleComponent> VehicleComponents { get; set; } = new List<VehicleComponent>();
 }

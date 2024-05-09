@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Infrastructure.RabbitMq.Contracts;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
@@ -10,10 +9,10 @@ public class RabbitMqProducer : IRabbitMqProducer
 {
     private readonly string _connectionString;
     private readonly string _exchange;
-    public RabbitMqProducer(IConfiguration configuration)
+    public RabbitMqProducer()
     {
-        _connectionString = configuration.GetValue<string>("RabbitMq:ConnectionString");
-        _exchange = configuration.GetValue<string>("RabbitMq:Exchange");
+        _connectionString = Environment.GetEnvironmentVariable("RabbitMqConnectionString", EnvironmentVariableTarget.Process);
+        _exchange = Environment.GetEnvironmentVariable("RabbitMqExchangeName", EnvironmentVariableTarget.Process);
     }
 
     public void PublishMessage<T>(T message, string topicName)

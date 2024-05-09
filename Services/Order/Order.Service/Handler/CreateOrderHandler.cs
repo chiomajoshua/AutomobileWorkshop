@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Domain.Models.Responses;
+﻿using BuildingBlocks.Domain.Models.Requests;
+using BuildingBlocks.Domain.Models.Responses;
 using BuildingBlocks.Infrastructure.Helpers;
 using BuildingBlocks.Infrastructure.RabbitMq.Contracts;
 using MediatR;
@@ -37,7 +38,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, AmwRespons
         else            
             await _orderItemService.CreateOrderItem(orderRequest.OrderItems.OrderItemDb(order.Id));
         
-        _rabbitMqProducer.PublishMessage(new { OrderId = order.Id }, "order.placed");
+        _rabbitMqProducer.PublishMessage(new OrderRequest { OrderId = order.Id }, "order.placed");
         return AmwResponse.CreatedResponse("Your Order has been placed");
     }
 }

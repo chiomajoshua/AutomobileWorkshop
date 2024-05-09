@@ -4,6 +4,7 @@ public enum OrderStatus
 {
     Placed,
     Cancelled,
-    Processing, 
+    Processing,
+    Ready,
     Completed    
 }

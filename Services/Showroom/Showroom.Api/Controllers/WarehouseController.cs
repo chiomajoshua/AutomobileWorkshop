@@ -37,7 +37,7 @@ public class WarehouseController : ControllerBase
     public async Task<IActionResult> GetAllVehicles([FromQuery] PaginationModel paginationModel, [FromQuery] GetVehicleFilter getVehicleFilter)
     {
         var response = await _mediator.Send(new GetVehiclesQuery(paginationModel, getVehicleFilter));
-        return StatusCode(response.ResponseCode, response);
+        return StatusCode(response.ResponseCode, response.ResponseData);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class WarehouseController : ControllerBase
     public async Task<IActionResult> GetVehicleById(Guid id)
     {
         var response = await _mediator.Send(new GetVehicleByIdQuery(id));
-        return StatusCode(response.ResponseCode, response);
+        return StatusCode(response.ResponseCode, response.ResponseData);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class WarehouseController : ControllerBase
     public async Task<IActionResult> GetAllComponents([FromQuery] PaginationModel paginationModel, [FromQuery] GetComponentFilter getComponentFilter)
     {
         var response = await _mediator.Send(new GetComponentsQuery(paginationModel, getComponentFilter));
-        return StatusCode(response.ResponseCode, response);
+        return StatusCode(response.ResponseCode, response.ResponseData);
     }
 
     /// <summary>
@@ -83,6 +83,6 @@ public class WarehouseController : ControllerBase
     public async Task<IActionResult> GetComponentById(Guid id)
     {
         var response = await _mediator.Send(new GetComponentByIdQuery(id));
-        return StatusCode(response.ResponseCode, response);
+        return StatusCode(response.ResponseCode, response.ResponseData);
     }
 }

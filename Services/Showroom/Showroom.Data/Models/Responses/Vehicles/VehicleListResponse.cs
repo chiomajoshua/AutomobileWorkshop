@@ -1,8 +1,9 @@
-﻿using BuildingBlocks.Domain.Models.Responses;
+﻿using BuildingBlocks.Domain.Entities;
+using BuildingBlocks.Domain.Models.Responses;
 
 namespace ShowroomService.Data.Models.Responses.Vehicles;
 
 public record VehicleListResponse : PageDetails
 {
-    public List<VehicleResponse> Vehicles { get; set; }
+    public IEnumerable<Vehicle> Vehicles { get; set; }
 }

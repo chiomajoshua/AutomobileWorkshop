@@ -17,7 +17,6 @@ public class AutomobileDbContext : DbContext
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<ProductionQueue> ProductionQueue {  get; set; }
     public DbSet<AssemblyQueue> AssemblyQueue { get; set; }
-    public DbSet<Events> Events { get; set; }
     public DbSet<VehicleComponent> VehicleComponents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -91,11 +90,6 @@ public class AutomobileDbContext : DbContext
             entity.HasOne(vc => vc.Component)
             .WithMany(c => c.VehicleComponents)
             .HasForeignKey(vc => vc.ComponentId);
-        });
-
-        modelBuilder.Entity<Inventory>(entity =>
-        {
-            entity.ToTable("Inventory", "Inventory");
         });
 
         modelBuilder.Entity<ProductionQueue>(entity =>

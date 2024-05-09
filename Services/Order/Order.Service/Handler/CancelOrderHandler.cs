@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Domain.Enumerators;
+using BuildingBlocks.Domain.Models.Requests;
 using BuildingBlocks.Domain.Models.Responses;
 using BuildingBlocks.Infrastructure.RabbitMq.Contracts;
 using MediatR;
@@ -31,7 +32,7 @@ public class CancelOrderHandler : IRequestHandler<CancelOrderCommand, AmwRespons
         if(!await _orderService.UpdateOrderAsync(order))
             return AmwResponse.ExceptionResponse();
         
-        _rabbitMqProducer.PublishMessage(new { OrderId = order.Id }, "order.cancelled");
+        _rabbitMqProducer.PublishMessage(new OrderRequest { OrderId = order.Id }, "order.cancelled");
         return AmwResponse.SuccessResponse(order);
     }
 }
