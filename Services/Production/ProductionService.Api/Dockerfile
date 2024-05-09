@@ -9,6 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Production/ProductionService.Api/ProductionService.Api.csproj", "Services/Production/ProductionService.Api/"]
+COPY ["Services/Production/ProductionService.Core/ProductionService.Core.csproj", "Services/Production/ProductionService.Core/"]
+COPY ["BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj", "BuildingBlocks/BuildingBlocks.Domain/"]
+COPY ["BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj", "BuildingBlocks/BuildingBlocks.Infrastructure/"]
 RUN dotnet restore "./Services/Production/ProductionService.Api/ProductionService.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Production/ProductionService.Api"

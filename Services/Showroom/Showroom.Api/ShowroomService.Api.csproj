@@ -9,6 +9,7 @@
     <DockerfileContext>..\..\..</DockerfileContext>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <IsServiceFabricServiceProject>True</IsServiceFabricServiceProject>
   </PropertyGroup>
 
   <ItemGroup>

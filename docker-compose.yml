@@ -1,8 +1,35 @@
 version: '3.4'
 
-services: 
-  showroom.api:
-    image: ${DOCKER_REGISTRY-}showroomapi
+services:
+  portainer:
+    image: portainer/portainer-ce
+
+  assemblyservice.api:
+    image: ${DOCKER_REGISTRY-}assemblyserviceapi
+    build:
+      context: .
+      dockerfile: Services/Assembly/AssemblyService.Api/Dockerfile
+
+
+  orderservice.api:
+    image: ${DOCKER_REGISTRY-}orderserviceapi
+    build:
+      context: .
+      dockerfile: Services/Order/Order.Api/Dockerfile
+
+
+  productionservice.api:
+    image: ${DOCKER_REGISTRY-}productionserviceapi
+    build:
+      context: .
+      dockerfile: Services/Production/ProductionService.Api/Dockerfile
+
+
+  showroomservice.api:
+    image: ${DOCKER_REGISTRY-}showroomserviceapi
     build:
       context: .
       dockerfile: Services/Showroom/Showroom.Api/Dockerfile
+
+volumes:
+  portainer_data:

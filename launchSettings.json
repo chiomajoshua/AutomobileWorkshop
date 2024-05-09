@@ -4,7 +4,11 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "showroom.api": "StartDebugging"
+        "showroom.api": "StartDebugging",
+        "assemblyservice.api": "StartDebugging",
+        "orderservice.api": "StartDebugging",
+        "productionservice.api": "StartDebugging",
+        "showroomservice.api": "StartDebugging"
       }
     }
   }

@@ -8,17 +8,21 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Order/Order.Api/Order.Api.csproj", "Services/Order/Order.Api/"]
-RUN dotnet restore "./Services/Order/Order.Api/Order.Api.csproj"
+COPY ["Services/Order/Order.Api/OrderService.Api.csproj", "Services/Order/Order.Api/"]
+COPY ["BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj", "BuildingBlocks/BuildingBlocks.Domain/"]
+COPY ["Services/Order/Order.Data/OrderService.Data.csproj", "Services/Order/Order.Data/"]
+COPY ["Services/Order/Order.Service/OrderService.Core.csproj", "Services/Order/Order.Service/"]
+COPY ["BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj", "BuildingBlocks/BuildingBlocks.Infrastructure/"]
+RUN dotnet restore "./Services/Order/Order.Api/OrderService.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Order/Order.Api"
-RUN dotnet build "./Order.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./OrderService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Order.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./OrderService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Order.Api.dll"]
+ENTRYPOINT ["dotnet", "OrderService.Api.dll"]
