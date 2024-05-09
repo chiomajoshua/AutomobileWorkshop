@@ -14,14 +14,8 @@ Welcome to the documentation for our Microservice Backend project! This guide pr
 6. [Database](#database)
 7. [Dockerization](#dockerization)
     - [Development Environment](#development-environment)
-    - [Production Environment](#production-environment)
 8. [Unit Testing](#unit-testing)
 9. [Usage of Shared Components](#usage-of-shared-components)
-    - [ApiManager](#http-service-abstraction)
-    - [CacheManager](#cachemanager-with-redis)
-    - [BaseQuery](#stored-procedures-with-dapper)
-    - [Validation](#validation-manager)
-    - [OMSResponse](#global-response-class-omsresponse)
 10. [Getting Started](#getting-started)
 11. [Contributing](#contributing)
 12. [License](#license)
@@ -54,7 +48,6 @@ Automobile Workshop Microservice Backend
 │       │   └───DatabaseContext
 │       │   └───Extensions
 │       │   └───RepositoryManager
-│       │   └───Validation
 │       │   │   ...
 │       └───BuildingBlocks.Test
 │
@@ -64,7 +57,7 @@ Automobile Workshop Microservice Backend
 │       │   │   │   Showroom.Api
 │       │   │   │   Showroom.Service
 │       │   │
-│       │   └───Inventory
+│       │   └───Order
 │       │   │   │   ...
 │       │   │
 │       │   └───Production
@@ -80,6 +73,23 @@ Automobile Workshop Microservice Backend
 
 - `docker-compose.yml` and `docker-compose.prod.yml` define Docker configs.
 - `src` contains microservice source and the shared library.
+
+## Architecture Overview
+
+Our microservices follow a CQRS architecture, with the nd utilizing Entity Framework Core,RabbitMq, Portainer(for container management), and more.)
+This architecture promotes separation of concerns and allows for efficient query and command handling.
+Some elements used in the project include:
+- Containerisation
+- Microservice
+- Mediator patterns
+- CQRS patterns
+- DDD patterns
+- Event based patterns
+Additional items that demonstrated
+- Structured Logging
+- Request Correlation
+- Error handling
+- Configuration
 
 
 ## Getting Started
